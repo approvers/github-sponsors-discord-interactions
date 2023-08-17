@@ -24,6 +24,8 @@ type Env = {
   };
 };
 
+const MY_GITHUB_LOGIN_NAME = "approvers";
+
 const app = new Hono<Env>();
 
 app.get("/", (c) => c.text("Hello Hono!"));
@@ -134,7 +136,7 @@ async function updateMetadata(
   const githubToken = await getGitHubToken(KV, discordUserId);
 
   const sponsoring = await github.fetchSponsoring(githubToken);
-  const isSponsoring = sponsoring.some((s) => s.login === "approvers");
+  const isSponsoring = sponsoring.some((s) => s.login === MY_GITHUB_LOGIN_NAME);
 
   const metadata = {
     is_sponsoring: isSponsoring ? 1 : 0,
