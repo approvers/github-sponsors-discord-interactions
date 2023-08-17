@@ -1,6 +1,6 @@
-import { BASE_URL, MY_GITHUB_LOGIN_NAME } from ".";
+import { BASE_URL, MY_GITHUB_LOGIN_NAME } from "./config";
 
-const REDIRECT_URI = new URL("/github-oauth-callback", BASE_URL).toString();
+const REDIRECT_URI = new URL("/github-oauth-callback", BASE_URL).href;
 
 export function getOAuthUrl(state: string, clientId: string): string {
   const url = new URL("https://github.com/login/oauth/authorize");

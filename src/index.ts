@@ -12,6 +12,7 @@ import {
   putGitHubToken,
 } from "./storage";
 import { registor } from "./registor";
+import { MY_GITHUB_LOGIN_NAME } from "./config";
 
 type Env = {
   Bindings: {
@@ -23,9 +24,6 @@ type Env = {
     GITHUB_CLIENT_SECRET: string;
   };
 };
-
-export const MY_GITHUB_LOGIN_NAME = "approvers";
-export const BASE_URL = "https://linked-role.approvers.dev";
 
 const app = new Hono<Env>();
 
