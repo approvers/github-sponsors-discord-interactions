@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import * as discord from "./discord";
 import * as github from "./github";
-import { getSignedCookie, setSignedCookie, deleteCookie } from "hono/cookie";
+import { setCookie, getCookie } from "hono/cookie";
 import { Temporal } from "@js-temporal/polyfill";
 import {
   getDiscordToken,
@@ -21,7 +21,6 @@ type Env = {
     DISCORD_TOKEN: string;
     GITHUB_CLIENT_ID: string;
     GITHUB_CLIENT_SECRET: string;
-    COOKIE_SIGN_SECRET: string;
   };
 };
 
@@ -39,7 +38,7 @@ app.get("/linked-role", async (c) => {
   const state = crypto.randomUUID();
   const url = discord.getOAuthUrl(state, c.env.DISCORD_CLIENT_ID);
 
-  await setSignedCookie(c, "state", state, c.env.COOKIE_SIGN_SECRET, {
+  setCookie(c, "state", state, {
     maxAge: 60 * 5,
     secure: true,
     httpOnly: true,
@@ -57,11 +56,7 @@ app.get("/discord-oauth-callback", async (c) => {
     return c.text("Invalid request", 400);
   }
 
-  const clientCookie = await getSignedCookie(
-    c,
-    c.env.COOKIE_SIGN_SECRET,
-    "state"
-  );
+  const clientCookie = getCookie(c, "state");
   if (discordState !== clientCookie) {
     return c.text("State verification failed", 403);
   }
@@ -98,11 +93,7 @@ app.get("/github-oauth-callback", async (c) => {
     return c.text("Invalid request", 400);
   }
 
-  const clientCookie = await getSignedCookie(
-    c,
-    c.env.COOKIE_SIGN_SECRET,
-    "state"
-  );
+  const clientCookie = getCookie(c, "state");
   if (githubState !== clientCookie) {
     return c.text("State verification failed", 403);
   }
