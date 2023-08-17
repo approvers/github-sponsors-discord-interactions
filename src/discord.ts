@@ -1,4 +1,6 @@
-const REDIRECT_URI = "https://local.s2n.tech/discord-oauth-callback";
+import { BASE_URL } from ".";
+
+const REDIRECT_URI = new URL("/discord-oauth-callback", BASE_URL).toString();
 
 export function getOAuthUrl(state: string, clientId: string): string {
   const url = new URL("https://discord.com/api/oauth2/authorize");

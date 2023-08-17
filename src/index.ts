@@ -24,7 +24,8 @@ type Env = {
   };
 };
 
-const MY_GITHUB_LOGIN_NAME = "approvers";
+export const MY_GITHUB_LOGIN_NAME = "approvers";
+export const BASE_URL = "https://linked-role.approvers.dev";
 
 const app = new Hono<Env>();
 

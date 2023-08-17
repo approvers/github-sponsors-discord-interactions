@@ -1,4 +1,6 @@
-const REDIRECT_URI = "https://local.s2n.tech/github-oauth-callback";
+import { BASE_URL, MY_GITHUB_LOGIN_NAME } from ".";
+
+const REDIRECT_URI = new URL("/github-oauth-callback", BASE_URL).toString();
 
 export function getOAuthUrl(state: string, clientId: string): string {
   const url = new URL("https://github.com/login/oauth/authorize");
@@ -90,7 +92,7 @@ export async function fetchSponsoring(
     body: JSON.stringify({ query }),
     method: "POST",
     headers: {
-      "User-Agent": "shun-shobon",
+      "User-Agent": MY_GITHUB_LOGIN_NAME,
       "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: `Bearer ${accessToken}`,
