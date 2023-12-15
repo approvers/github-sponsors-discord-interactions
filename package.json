@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@js-temporal/polyfill": "^0.4.4",
-    "hono": "^3.4.3"
+    "hono": "^3.11.7"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230814.0",
